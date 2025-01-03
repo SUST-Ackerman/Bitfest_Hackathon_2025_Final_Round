@@ -7,11 +7,11 @@ import { AuthError } from 'next-auth';
 import * as z from 'zod';
 
 export const login = async (values: z.infer<typeof LoginSchema>) =>{
-    const { email, password } = values;
+    const { username, password } = values;
 
     try {
         await signIn('credentials', {
-            email,
+            username,
             password,
             redirectTo: DEFAULT_LOGIN_REDIRECT,
         })
