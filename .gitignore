@@ -261,6 +261,10 @@ cmake-build-*/
 # IntelliJ
 out/
 
+
+.idea
+.env
+.env.local
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
@@ -429,6 +433,3 @@ pip-selfcheck.json
 # End of https://www.toptal.com/developers/gitignore/api/macos,redis,python,django,virtualenv,pycharm+all,visualstudiocode,vagrant
 
 .credentials
-
-backend
-backend/*

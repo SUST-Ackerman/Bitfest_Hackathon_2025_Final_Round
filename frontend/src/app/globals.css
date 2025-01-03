@@ -63,4 +63,9 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .tox-statusbar {
+    display: none !important;
+  }
+  
 }
