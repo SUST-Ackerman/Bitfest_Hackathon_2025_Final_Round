@@ -32,7 +32,11 @@ export const {
         async jwt({ token, user, account, session }) {
             
             if (account) {
-                console.log("account access_token ||||||| ", account.access_token);
+
+                if (user && user.key) {
+                    token.token = user.key;
+                    return token;
+                }
 
                 const newUser = await fetch(`${process.env.BASE_API_URL}/api/auth/v1/google/login/`, {
                     method: "POST",
@@ -62,9 +66,11 @@ export const {
                     token.token = newUser.key;
                 }
             } else if (user) {
+                console.log("user ||||||| ", user);
                 const usermodel = user as UserResponse;
                 token.token = usermodel.token;
             }
+            console.log("token ||||||| ", token);
             return token;
         },
     },
@@ -78,7 +84,7 @@ export const {
                     return null;
                 }
 
-                const { email, password } = validatedFields.data;
+                const { username, password } = validatedFields.data;
 
                 const user = await fetch(`${process.env.BASE_API_URL}/api/auth/v1/login/`, {
                     method: "POST",
@@ -86,19 +92,20 @@ export const {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        email: email,
+                        username,
                         password: password
                     })
                 })
-                    .then((res) => {
+                    .then(async (res) => {
                         if (res.ok) {
-                            return res.json();
+                            return await res.json();
                         } else {
                             throw new Error('Login failed');
                         }
                     })
                     .then((data) => {
-                        return UserModel(data);
+                        console.log("login data ||||||| ", data);
+                        return {key: data.key};
                     })
                     .catch((err) => {
                         return null;

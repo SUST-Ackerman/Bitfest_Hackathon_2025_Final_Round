@@ -33,6 +33,7 @@ const CredentialLoginForm = () => {
     const onSubmit = (values: z.infer<typeof LoginSchema>) => { 
         setErrorMessage("");
         setSuccessMessage("");
+        console.log("values ||||||| ", values);
 
         startTransition(() => {
             login(values)
@@ -53,16 +54,16 @@ const CredentialLoginForm = () => {
                     <div className="space-y-6">
                         <FormField
                             control={form.control}
-                            name="email"
+                            name="username"
                             render={({field}) => (
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel>Username</FormLabel>
                                     <FormControl>
                                         <Input 
                                             {...field}
                                             disabled={isPending}
-                                            type="email"
-                                            placeholder="john.doe@example.com"
+                                            type="text"
+                                            placeholder="john.doe"
                                         />
                                     </FormControl>
                                     <FormMessage />
