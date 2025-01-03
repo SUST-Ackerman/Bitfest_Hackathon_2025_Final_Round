@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { startTransition, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle2 } from "lucide-react";
+import { uploadNewTrainingData } from "@/features/train-data/api/train-new-data";
 
 export default function ContributePage() {
   const [banglishText, setBanglishText] = useState("");
@@ -29,10 +30,16 @@ export default function ContributePage() {
     console.log("Banglish Text:", banglishText);
     console.log("Bangla Text:", banglaText);
 
-    // Simulating an API call with a timeout
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const res = await uploadNewTrainingData({
+      banglish: banglishText,
+      bangla: banglaText,
+    });
 
-    console.log("Form submission completed");
+    if (!res) {
+      alert("Error uploading new training data");
+      setIsSubmitting(false);
+      return;
+    }
 
     // Reset form and show success message
     setBanglishText("");
@@ -49,7 +56,7 @@ export default function ContributePage() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto mt-40">
       <CardHeader>
         <CardTitle>Contribute to Translation Improvement</CardTitle>
         <CardDescription>

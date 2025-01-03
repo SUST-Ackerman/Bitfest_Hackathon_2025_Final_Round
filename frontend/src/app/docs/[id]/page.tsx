@@ -216,7 +216,7 @@ const handlePDFUpload = async () => {
     return (
         <div className="relative overflow-y-auto">
             {/* Header */}
-            <div className="w-full fixed top-0 bg-white h-10 flex items-center p-5 text-gray-800 gap-5 z-10">
+            <div className="w-full fixed top-18 bg-white h-10 flex items-center p-5 text-gray-800 gap-5 z-10">
                 <House size={15} />
                 <ChevronRight size={12} />
                 Untitled
@@ -259,7 +259,7 @@ const handlePDFUpload = async () => {
 
                 {/* Sidebar (AI Chatbot) */}
                 <div>
-                    <div className="bg-white fixed ml-5 top-20 shadow-lg p-1 rounded-md flex flex-col gap-2">
+                    <div className="bg-white fixed ml-5 top-40 shadow-lg p-1 rounded-md flex flex-col gap-2">
                         <button
                             className="p-1 text-slate-500 rounded hover:bg-slate-500/15"
                             onClick={handleBold}
@@ -286,10 +286,10 @@ const handlePDFUpload = async () => {
                         </button>
                     </div>
                     <div
-                        className={`mt-10 transition-all duration-300 transform ${isSidebarOpen ? "translate-x-0" : "translate-x-full"
+                        className={`mt-32 transition-all duration-300 transform ${isSidebarOpen ? "translate-x-0" : "translate-x-full"
                             } fixed top-0 right-0 w-80 bg-white shadow-lg p-5 overflow-y-auto h-full z-20`}
                         style={{
-                            height: "100vh", // Full height for the sidebar
+                            height: "80vh", // Full height for the sidebar
                         }}
                     >
                         <h2 className="text-xl font-bold">AI Chatbot</h2>

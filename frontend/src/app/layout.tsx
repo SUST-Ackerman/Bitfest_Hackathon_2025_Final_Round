@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "min-h-screen bg-background")}>
-        <header className="bg-primary text-primary-foreground py-4">
+        <header className="bg-primary w-full fixed top-0 text-primary-foreground py-4">
           <nav className="container mx-auto flex justify-between items-center">
             <h1 className="text-2xl font-bold">Banglish to Bangla</h1>
             <ul className="flex space-x-4">
@@ -29,7 +30,7 @@ export default function RootLayout({
             </ul>
           </nav>
         </header>
-        <main className="container mx-auto py-8">
+        <main className="mt-[60px]">
           <ReactQueryProvider>
           {children}
         </ReactQueryProvider>

@@ -10,6 +10,14 @@ class StoryListAPIView(generics.ListCreateAPIView):
     serializer_class = StorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    def get_queryset(self):
+        user = self.request.user
+        user_from_query = self.request.query_params.get('user')
+
+        if user_from_query and user_from_query != user.username:
+            return PDF.objects.filter(user__username=user_from_query, is_public=True)
+        return PDF.objects.filter(user=user)
+
 
 class DocListAPIView(generics.ListCreateAPIView):
     queryset = Doc.objects.all()

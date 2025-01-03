@@ -8,7 +8,7 @@ class StorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PDF
-        fields = ('id', 'title', 'content', 'user', 'is_public')
+        fields = ('id', 'title', 'content', 'user', 'is_public', 'created_at', 'updated_at')
 
 
 class DocSerializer(serializers.ModelSerializer):

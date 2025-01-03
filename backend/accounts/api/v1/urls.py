@@ -2,7 +2,7 @@ from dj_rest_auth.registration.views import RegisterView, ResendEmailVerificatio
 from dj_rest_auth.views import LoginView, LogoutView, PasswordChangeView, UserDetailsView
 from django.urls import include, path
 
-from accounts.api.v1.views import GoogleLogin, UserAPIView
+from accounts.api.v1.views import GoogleLogin, LoggedInUserAPIView, UserAPIView
 
 app_name = 'v1'
 
@@ -14,7 +14,8 @@ urlpatterns = [
     ])),
     path('login/', LoginView.as_view(), name='rest_login'),
     path('logout/', LogoutView.as_view(), name='rest_logout'),
-    path('user/', UserAPIView.as_view(), name='user_details'),
+    path('me/', LoggedInUserAPIView.as_view(), name='my_details'),
+    path('user/<str:username>/', UserAPIView.as_view(), name='rest_user_details'),
     path('password/change/', PasswordChangeView.as_view(), name='rest_password_change'),
     path('google/login/', GoogleLogin.as_view(), name='google_login'),
 ]

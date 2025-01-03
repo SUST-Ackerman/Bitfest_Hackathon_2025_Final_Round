@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Grid, List } from "lucide-react";
+import { usePDFs } from "@/features/pdfs/hook/use-pdfs";
 
 const dummyDocuments = [
   {
@@ -28,11 +29,25 @@ const dummyDocuments = [
   },
 ];
 
-const UserDocuments = () => {
-  const [viewMode, setViewMode] = useState("grid");
+interface ParamProps {
+  params: {
+      username: string;
+  };
+}
+
+
+const UserDocuments = (props: ParamProps) => {
+  const { username } = props.params;
+
+  useEffect(() => {
+    console.log("username", username);
+  }, [username]);
+
+  const [viewMode, setViewMode] = useState("list");
+  const pdfs = usePDFs({ username: username });
 
   return (
-    <div className="p-8 min-h-screen bg-gray-100">
+    <>
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Your Documents</h1>
@@ -72,26 +87,26 @@ const UserDocuments = () => {
             : "flex flex-col space-y-4"
         }
       >
-        {dummyDocuments.map((doc) => (
+        {pdfs.data?.map((doc) => (
           <Card key={doc.id} className="p-4 shadow-sm border rounded-md">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold text-lg truncate">{doc.title}</h2>
-              {doc.private && (
+              {!doc.is_public && (
                 <span className="text-sm text-gray-500 border px-2 py-1 rounded">
                   Private
                 </span>
               )}
             </div>
             <p className="text-sm text-gray-600 mt-2">
-              Created by: {doc.createdBy}
+              Created by: {username}
             </p>
             <p className="text-sm text-gray-600">
-              Last viewed: {doc.lastViewed}
+              Last viewed: {doc.updated_at}
             </p>
           </Card>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,9 +1,12 @@
 from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from accounts.models import BillingProfile
-from chatbot.api.serializers import EditDocumentAISerializer
+from chatbot.api.permissions import IsAdmin
+from chatbot.api.serializers import EditDocumentAISerializer, TrainingDataSerializer
 from chatbot.clients import Gemini
+from chatbot.models import TrainingData
 from documents.api.serializers import DocSerializer
 from documents.models import DocAccess
 
@@ -92,3 +95,19 @@ class RefineDocumentAPIView(generics.RetrieveAPIView):
             )
 
 
+class DataTrainAPIView(generics.ListCreateAPIView):
+    serializer_class = TrainingDataSerializer
+    queryset = TrainingData.objects.all()
+    permission_classes = [IsAuthenticated]
+
+
+class TrainingReviewAPIView(generics.ListAPIView):
+    serializer_class = TrainingDataSerializer
+    queryset = TrainingData.objects.exclude(approved=True).exclude(rejected=True)
+    permission_classes = [IsAuthenticated, IsAdmin]
+
+
+class TrainingDataDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TrainingDataSerializer
+    queryset = TrainingData.objects.all()
+    permission_classes = [IsAuthenticated, IsAdmin]
